@@ -4,22 +4,14 @@ public class User {
 	
 	private int userId;
 	
-	private String name;
+	private String userName;
 	
-	private String loginName;
 	
 	
 	private String password;
 
 
-	public String getLoginName() {
-		return loginName;
-	}
 
-
-	public void setLoginName(String loginName) {
-		this.loginName = loginName;
-	}
 
 
 	public String getPassword() {
@@ -42,12 +34,31 @@ public class User {
 	}
 
 
-	public User(int userId, String loginName, String password) {
+	public String getUserName() {
+		return userName;
+	}
+
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	
+	
+
+	public User() {
+	}
+
+
+	public User(int userId, String userName, String password) {
 		super();
 		this.userId = userId;
-		this.loginName = loginName;
+		this.userName = userName;
 		this.password = password;
 	}
+
+
+
 
 
 	

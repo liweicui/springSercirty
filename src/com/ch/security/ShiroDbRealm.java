@@ -12,11 +12,20 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.PrincipalCollection;
 
+import com.ch.dao.UserDao;
 import com.ch.model.User;
-
 
 public class ShiroDbRealm extends AuthorizingRealm{
 
+	public ShiroDbRealm(){
+		
+		System.out.println("init ..... ShiroDbRealm .....");
+		
+	}
+	
+	
+	private UserDao  userDao;
+	
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
 		  
@@ -48,28 +57,41 @@ public class ShiroDbRealm extends AuthorizingRealm{
 	@Override
 	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken principals) throws AuthenticationException {
 		
-		
-	        
            UsernamePasswordToken token = (UsernamePasswordToken) principals;  
 	        
-	        String  password = String.valueOf(token.getPassword());  
+	        String  password = String.valueOf(token.getPassword());  String userName = token.getUsername();
+	        System.out.println("password=="+password+";userName=="+userName);
 	         //调用操作数据库的方法查询user信息  
 	       // User user = userOperator.login( token.getUsername());
-	        User user = new User(2,"xiaocui","password");
-	        if( user != null ) {  
-	            if(password.equals(user.getPassword())){  
-	                  Session session= SecurityUtils.getSubject().getSession();  
-	                  session.setAttribute("username", user.getLoginName());  
-	             return new SimpleAuthenticationInfo(user.getUserId(), user.getPassword(), getName());  
-	            }else{  
-	                return null;  
-	            }  
-	        } else {  
-	            return null;  
-	        }  
 	        
+	        try {
+				User user =  userDao.getUser(userName, password);
+      
+				if( user != null ) {  
+				     Session session= SecurityUtils.getSubject().getSession();  
+				     session.setAttribute("username", user.getUserName());  
+				     return new SimpleAuthenticationInfo(user.getUserId(), user.getPassword(), getName());  
+				} else {  
+				    return null;  
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return null;
 	        
 	}
+
+	public UserDao getUserDao() {
+		return userDao;
+	}
+
+	public void setUserDao(UserDao userDao) {
+		System.out.println("set ....setUserDao....");
+		this.userDao = userDao;
+	}
+	
+	
+	
 
 	
 }

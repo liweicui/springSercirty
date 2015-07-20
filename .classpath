@@ -31,5 +31,8 @@
 	<classpathentry kind="lib" path="webRoot/WEB-INF/lib/servlet-api.jar"/>
 	<classpathentry kind="lib" path="webRoot/WEB-INF/lib/aopalliance-alpha1.jar"/>
 	<classpathentry kind="lib" path="webRoot/WEB-INF/lib/aopalliance-1.0.jar"/>
+	<classpathentry kind="lib" path="webRoot/WEB-INF/lib/mybatis-3.1.1.jar"/>
+	<classpathentry kind="lib" path="webRoot/WEB-INF/lib/mybatis-spring-1.1.1.jar"/>
+	<classpathentry kind="lib" path="webRoot/WEB-INF/lib/mysql-connector-java-5.1.35(1).jar"/>
 	<classpathentry kind="output" path="webRoot/WEB-INF/classes"/>
 </classpath>

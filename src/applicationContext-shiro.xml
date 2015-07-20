@@ -4,6 +4,37 @@
 	default-lazy-init="true">
 
 	<description>Shiro Configuration</description>
+ 
+ <bean id="jdbcDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">  
+	    <property name="driverClassName">  
+	        <value>org.gjt.mm.mysql.Driver</value>  
+	    </property>  
+	    <property name="url">  
+	        <value>jdbc:mysql://localhost:3306/shiro?useUnicode=true</value>  
+	    </property>  
+	    <property name="username">  
+	        <value>root</value>  
+	    </property>  
+	    <property name="password">  
+	        <value>root</value>  
+	    </property>  
+   </bean>  
+    
+    
+  <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">  
+     <property name="dataSource" ref="jdbcDataSource" />  
+     <property name="configLocation" value="classpath:mybatis-config.xml"></property>  
+ </bean>  
+   
+ 
+ <bean  id="userDao"  class="org.mybatis.spring.mapper.MapperFactoryBean">  
+     <property name="mapperInterface" value="com.ch.dao.UserDao"></property>  
+     <property name="sqlSessionFactory" ref="sqlSessionFactory"></property>  
+ </bean> 
+     <bean id="shiroDbRealm" class="com.ch.security.ShiroDbRealm">
+		<property name="userDao" ref="userDao"></property>
+	</bean>
+
 
 	<!-- Shiro's main business-tier object for web-enabled applications -->
 	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager" >
@@ -11,11 +42,8 @@
 		<property name="cacheManager" ref="cacheManager" />
 	</bean>
 
-	<!-- 項目自定义的Realm -->
-	<bean id="shiroDbRealm" class="com.ch.security.ShiroDbRealm">
-		
-	</bean>
-
+	
+	 
 	<!-- Shiro Filter -->
 	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
 		<property name="securityManager" ref="securityManager" />

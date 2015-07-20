@@ -1,3 +1,6 @@
-/applicationContext-shiro.xml
 /com
-/spring3mvc-servlet.xml
+/config.properties
+/sqlmap-config.xml
+/mybatis-config.xml
+/config
+/applicationContext-shiro.xml
